@@ -66,14 +66,6 @@ export const videos = [
     videoAuthor: 'Mayor Vargas',
     videoStats: '1M views · 4 hours ago',
     videoTime: '11:20',
-  },
-  {
-    thumbnail: '/united.jpg',
-    profilePicture: '/image1.png',
-    videoTitle: 'Manchester United Vs Arsenal Extended Highlights',
-    videoAuthor: 'Mayor Vargas',
-    videoStats: '1M views · 4 hours ago',
-    videoTime: '11:20',
   }
  ];
  
