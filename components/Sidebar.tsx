@@ -16,16 +16,16 @@ const Sidebar: React.FC = () => {
     'Explore',
     'Subscriptions',
     'Originals',
-    'YouTube Music',
+    'Musics',
     'Library',
   ];
 
   return (
-    <aside className="fixed left-0 top-14 bottom-0 bg-white w-20 z-40">
+    <aside className="fixed left-0 top-14 text-black bottom-0 bg-green-100 w-20 z-40">
       {labels.map((item, index) => {
         const Icon = icons[index];
         return (
-          <div key={index} className="flex flex-col items-center justify-center h-20 cursor-pointer hover:bg-gray-100">
+          <div key={index} className="flex flex-col items-center justify-center h-20 cursor-pointer hover:bg-blue-200">
             <Icon className="h-10 mb-2 text-gray-700" />
             <span className="text-xs">{item}</span>
           </div>

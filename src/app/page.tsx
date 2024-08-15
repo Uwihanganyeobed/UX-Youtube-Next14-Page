@@ -5,10 +5,10 @@ import VideoGrid from "../../components/VideoGrid";
 
 export default function Home() {
   return (
-    <div>
+    <div className="bg-black">
       <Header />
       <Sidebar />
-      <main className="ml-20 pt-14">
+      <main className="ml-20 pt-14 bg-gray-100 text-black">
         <VideoGrid />
       </main>
     </div>
