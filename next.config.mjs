@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+   experimental: {
+      serverActions:{
+         allowedOrigins: ['my-proxy.com']
+      }
+   }
+};
 
 export default nextConfig;

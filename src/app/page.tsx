@@ -1,16 +1,24 @@
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
-import VideoGrid from "../../components/VideoGrid";
+import React from 'react'
+/*
+Mu Ncamake, ibi ni ibyo ugomba kwitaho mu e-commerce web app yawe:
 
+Kora neza routing y’urubuga.
+Hitamo uburyo bwiza bwo kwerekana amakuru (SSR, SSG, cyangwa ISR).
+Koresha caching ngo wongere umuvuduko.
+Shyiramo authentication n’umutekano ukomeye.
+Koresha API routes mu gutoragura no gutunganya amakuru.
+Koresha imyambarire ishyira imbere performance nka Tailwind CSS.
+Tegura tests za buri gace kugira ngo umenye ko ibintu byose bikora neza.
+Shyira urubuga ku murongo ukoresheje Vercel cyangwa izindi platforms.
+*/ 
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className="bg-black">
-      <Header />
-      <Sidebar />
-      <main className="ml-20 pt-14 bg-gray-100 text-black">
-        <VideoGrid />
-      </main>
+    <div>
+      Home
+      
     </div>
-  );
+  )
 }
+
+export default Home
