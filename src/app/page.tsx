@@ -1,4 +1,5 @@
 "use client";
+import HomeSkeleton from "@/skeletons/HomeSkeleton";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -9,9 +10,7 @@ interface IInterpretations {
 }
 
 const Home = () => {
-  const [interPretations, setInterPretations] = useState<IInterpretations[]>(
-    []
-  );
+  const [interPretations, setInterPretations] = useState<IInterpretations[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,22 +38,31 @@ const Home = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await fetch(`/api/interpretations/${id}`, {method: "DELETE"});
-      setInterPretations((prevInterpretations) => prevInterpretations?.filter((i)=> i.$id !== id)  
-      )
+      await fetch(`/api/interpretations/${id}`, { method: "DELETE" });
+      setInterPretations((prevInterpretations) =>
+        prevInterpretations?.filter((i) => i.$id !== id)
+      );
     } catch (error) {
-      setError('Failed to delete interpretation, please try again')
+      setError("Failed to delete interpretation, please try again");
     }
-  }
+  };
 
   return (
     <div>
       {error && <p className="py-4 text-red-500">{error}</p>}
       {isLoading ? (
-        <p>Loading interpretations....</p>
+        // Skeleton loading UI
+        <>
+          <HomeSkeleton />
+          <HomeSkeleton />
+          <HomeSkeleton />
+        </>
       ) : interPretations?.length > 0 ? (
         interPretations?.map((interpretation) => (
-          <div key={interpretation.$id} className="p-4 my-2 rounded-md border-b leading-8">
+          <div
+            key={interpretation.$id}
+            className="p-4 my-2 rounded-md border-b leading-8"
+          >
             <div className="font-bold">{interpretation.term}</div>
             <div>{interpretation.interpretation}</div>
             <div className="flex gap-4 mt-4 justify-end">
@@ -64,13 +72,16 @@ const Home = () => {
               >
                 Edit
               </Link>
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md uppercase text-sm font-bold tracking-widest" onClick={()=> handleDelete(interpretation.$id)}>
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded-md uppercase text-sm font-bold tracking-widest"
+                onClick={() => handleDelete(interpretation.$id)}
+              >
                 Delete
               </button>
             </div>
           </div>
         ))
-      ): (
+      ) : (
         <p>No Interpretations found......</p>
       )}
     </div>
