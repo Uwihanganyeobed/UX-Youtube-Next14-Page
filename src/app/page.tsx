@@ -1,33 +1,80 @@
-import Link from 'next/link'
-import React from 'react'
-/*
-Mu Ncamake, ibi ni ibyo ugomba kwitaho mu e-commerce web app yawe:
+"use client";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
-Kora neza routing y’urubuga.
-Hitamo uburyo bwiza bwo kwerekana amakuru (SSR, SSG, cyangwa ISR).
-Koresha caching ngo wongere umuvuduko.
-Shyiramo authentication n’umutekano ukomeye.
-Koresha API routes mu gutoragura no gutunganya amakuru.
-Koresha imyambarire ishyira imbere performance nka Tailwind CSS.
-Tegura tests za buri gace kugira ngo umenye ko ibintu byose bikora neza.
-Shyira urubuga ku murongo ukoresheje Vercel cyangwa izindi platforms.
-*/ 
-
-const Home = () => {
-  return (
-    <div className='p-4 my-2 rounded-md border-b leading-8'>
-      <div className=" font-bold ">
-        Natural Language processing (NLP)
-      </div>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore obcaecati voluptate consectetur magnam. Aspernatur perspiciatis asperiores veritatis totam nisi, voluptatibus velit iste rem odit. Eaque molestias laudantium quas magni temporibus.
-      </div>
-      <div className=' flex gap-4 mt-4 justify-end'>
-        <Link className='bg-slate-200 px-4 py-2 rounded-md uppercase text-sm font-bold tracking-widest' href='/edit'>Edit</Link>
-        <button className='bg-red-500 text-white px-4 py-2 rounded-md uppercase text-sm font-bold tracking-widest'>Delete</button>
-      </div>
-    </div>
-  )
+interface IInterpretations {
+  $id: string;
+  term: string;
+  interpretation: string;
 }
 
-export default Home
+const Home = () => {
+  const [interPretations, setInterPretations] = useState<IInterpretations[]>(
+    []
+  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchInterpretations = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("/api/interpretations");
+        if (!response.ok) {
+          throw new Error("Failed to fetch interpretations");
+        }
+        const data = await response.json();
+        setInterPretations(data);
+      } catch (error) {
+        console.log("error", error);
+        setError(
+          "Failed to load interpretations, Please try reloading the page"
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchInterpretations();
+  }, []);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await fetch(`/api/interpretations/${id}`, {method: "DELETE"});
+      setInterPretations((prevInterpretations) => prevInterpretations?.filter((i)=> i.$id !== id)  
+      )
+    } catch (error) {
+      setError('Failed to delete interpretation, please try again')
+    }
+  }
+
+  return (
+    <div>
+      {error && <p className="py-4 text-red-500">{error}</p>}
+      {isLoading ? (
+        <p>Loading interpretations....</p>
+      ) : interPretations?.length > 0 ? (
+        interPretations?.map((interpretation) => (
+          <div key={interpretation.$id} className="p-4 my-2 rounded-md border-b leading-8">
+            <div className="font-bold">{interpretation.term}</div>
+            <div>{interpretation.interpretation}</div>
+            <div className="flex gap-4 mt-4 justify-end">
+              <Link
+                className="bg-slate-200 px-4 py-2 rounded-md uppercase text-sm font-bold tracking-widest"
+                href={`/edit/${interpretation.$id}`}
+              >
+                Edit
+              </Link>
+              <button className="bg-red-500 text-white px-4 py-2 rounded-md uppercase text-sm font-bold tracking-widest" onClick={()=> handleDelete(interpretation.$id)}>
+                Delete
+              </button>
+            </div>
+          </div>
+        ))
+      ): (
+        <p>No Interpretations found......</p>
+      )}
+    </div>
+  );
+};
+
+export default Home;
