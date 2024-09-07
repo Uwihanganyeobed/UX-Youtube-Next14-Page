@@ -45,7 +45,7 @@ export async function POST(req: Request) {
    try {
       const {term, interpretation} = await req.json();
       const data = {term, interpretation};
-      const response = await createInterpretation(data)
+      const response = await createInterpretation(data);
       return NextResponse.json({message: "interpretation created"})
    } catch (error) {
       return NextResponse.json({

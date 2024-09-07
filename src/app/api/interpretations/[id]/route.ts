@@ -7,7 +7,7 @@ const database = new Databases(client);
 
 //create interpretations
 
-export async function fetchInterpretation(id: string) {
+async function fetchInterpretation(id: string) {
   try {
     const interpretation = await database.getDocument(
       process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
