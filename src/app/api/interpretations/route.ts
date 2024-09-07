@@ -24,7 +24,6 @@ export async function createInterpretation(data: {
    throw new Error('Failed to create interpretation')
   }
 }
-
 //fetch interpretation
 
 export async function fetchInterpretations() {
@@ -42,7 +41,6 @@ export async function fetchInterpretations() {
  }
 
  //post
-
 export async function POST(req: Request) {
    try {
       const {term, interpretation} = await req.json();
