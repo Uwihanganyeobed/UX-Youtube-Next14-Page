@@ -2,6 +2,7 @@ import { Databases, ID, Query } from "appwrite";
 import client from "../../../../lib/appwrite_client";
 
 import { NextResponse } from "next/server";
+import { use } from "react";
 
 const database = new Databases(client);
 
