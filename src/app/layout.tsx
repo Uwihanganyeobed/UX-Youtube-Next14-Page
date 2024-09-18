@@ -20,11 +20,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <div className="flex items-center flex-row gap-3">
-          <Navbar />
-        <Sidebar />
-    
-        </div> */}
         <div className="max-w-3xl mx-auto text-slate-800">
           <header className="p-6 items-center border-b flex justify-between bg-blue-500 rounded-bl-lg rounded-br-lg">
             <Link className="text-2xl font-bold text-white" href="/">Tech Interpretations</Link>
