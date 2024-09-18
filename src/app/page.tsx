@@ -13,6 +13,7 @@ const Home = () => {
   const [interPretations, setInterPretations] = useState<IInterpretations[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchInterpretations = async () => {
@@ -46,9 +47,17 @@ const Home = () => {
       setError("Failed to delete interpretation, please try again");
     }
   };
+  //filter on searhc term
+  const filteredInterpretations = interPretations.filter((interpretation)=> interpretation.term.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
   return (
     <div>
+      <input
+       type="text"
+       className="border w-full rounded-xl text-xl p-1 text-center"
+       placeholder="Search interpretations"
+       value={searchTerm}
+       onChange={(e)=> setSearchTerm(e.target.value)} />
       {error && <p className="py-4 text-red-500">{error}</p>}
       {isLoading ? (
         // Skeleton loading UI
@@ -57,8 +66,8 @@ const Home = () => {
           <HomeSkeleton />
           <HomeSkeleton />
         </>
-      ) : interPretations?.length > 0 ? (
-        interPretations?.map((interpretation) => (
+      ) : filteredInterpretations?.length > 0 ? (
+        filteredInterpretations?.map((interpretation) => (
           <div
             key={interpretation.$id}
             className="p-4 my-2 rounded-md border-b leading-8"
